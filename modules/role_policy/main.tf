@@ -41,3 +41,22 @@ resource "aws_iam_role_policy" "junior_devops_policy" {
     ]
   })
 }
+
+
+resource "aws_iam_instance_profile" "junior_devops_profile" {
+  name = "junior-devops-profile"
+  role = aws_iam_role.junior_devops_role.name
+}
+
+resource "aws_instance" "jenkins" {
+  ami                    = var.ami_id
+  instance_type          = "t3.medium"
+#   vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
+  iam_instance_profile   = aws_iam_instance_profile.junior_devops_profile.name
+  key_name               = var.key_name
+
+  tags = {
+    Name = "Jenkins-Server"
+    Environment = "production"
+  }
+}
