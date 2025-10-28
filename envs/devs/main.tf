@@ -12,3 +12,9 @@ module "vpc" {
 
 
 }
+
+
+module "role_policy" {
+  source = "../../modules/role_policy"
+  
+}
